@@ -161,6 +161,33 @@ public class Picture extends SimplePicture {
   public void edgeDetection() {
     // add your code here
     Pixel[][] pixels = this.getPixels2D();
+    // for (int i = 0; i < pixels.length; i++) {
+    // for (int j = 0; j < pixels[i].length - 1; j++) {
+    // if (pixels[i][j].colorDistance(pixels[i][j + 1].getColor()) > 14) {
+    // pixels[i][j].setGreen(0);
+    // pixels[i][j].setBlue(0);
+    // pixels[i][j].setRed(0);
+    // } else {
+    // pixels[i][j].setRed(255);
+    // pixels[i][j].setGreen(255);
+    // pixels[i][j].setBlue(255);
+    // }
+    // }
+    // }
+
+    for (int i = 0; i < pixels.length - 1; i++) {
+      for (int j = 0; j < pixels[i].length; j++) {
+        if (pixels[i][j].colorDistance(pixels[i + 1][j].getColor()) > 14.8) {
+          pixels[i][j].setGreen(0);
+          pixels[i][j].setBlue(0);
+          pixels[i][j].setRed(0);
+        } else {
+          pixels[i][j].setRed(255);
+          pixels[i][j].setGreen(255);
+          pixels[i][j].setBlue(255);
+        }
+      }
+    }
   }
 
   /**
@@ -169,11 +196,35 @@ public class Picture extends SimplePicture {
    */
   public void mirrorVertical() {
     // add your code here
+    Pixel[][] pixels = this.getPixels2D();
+
+    for (int i = 0; i < pixels.length; i++) {
+      for (int j = 0; j < this.getWidth() / 2; j++) {
+        Pixel otherSide = pixels[i][getWidth() - j - 1];
+
+        otherSide.setRed(pixels[i][j].getRed());
+        otherSide.setGreen(pixels[i][j].getGreen());
+        otherSide.setBlue(pixels[i][j].getBlue());
+      }
+    }
   }
 
   /** Method to mirror around a diagonal line from bottom left to top right */
   public void mirrorDiagonal() {
     // add your code here
+    System.out.println(this.getWidth()); // x
+    System.out.println(this.getHeight()); // y
+
+    Pixel[][] pixels = this.getPixels2D();
+    for (int i = 0; i < pixels.length; i++) {
+      for (int j = 0; j < getHeight(); j++) {
+        Pixel current = pixels[i][j];
+        current.setRed(pixels[j][i].getRed());
+        current.setGreen(pixels[j][i].getGreen());
+        current.setBlue(pixels[j][i].getBlue());
+      }
+    }
+
   }
 
   /**
@@ -182,14 +233,36 @@ public class Picture extends SimplePicture {
    */
   public void mirrorTemple() {
     // add your code here
+    Pixel[][] pixels = this.getPixels2D();
+    for (int i = 0; i < 98; i++) {
+      for (int j = 0; j < getWidth() / 2; j++) {
+        Pixel otherSide = pixels[i][getWidth() - j - 1];
+        otherSide.setRed(pixels[i][j].getRed());
+        otherSide.setGreen(pixels[i][j].getGreen());
+        otherSide.setBlue(pixels[i][j].getBlue());
+
+      }
+    }
+
   }
 
   /**
    * Method to mirror just part of a picture of a snowman, so that it will have
    * four arms instead of two
    */
-  public void mirrorArms() {
+  public void mirrorArms() { // column 170 and row 153 - > start; column 170 and row 194
     // add your code here
+    Pixel[][] pixels = this.getPixels2D();
+    for (int i = 153; i < 194; i++) {
+      for (int j = 0; j <= 170; j++) {
+        Pixel otherPixel = pixels[getHeight() - i][j];
+        otherPixel.setRed(pixels[i][j].getRed());
+        otherPixel.setGreen(pixels[i][j].getGreen());
+        otherPixel.setBlue(pixels[i][j].getBlue());
+
+      }
+    }
+
   }
 
   /** Method to copy the gull in the picture to another location of the picture */
