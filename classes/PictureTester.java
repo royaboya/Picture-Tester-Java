@@ -25,8 +25,8 @@ public class PictureTester
     // testMirrorVertical();
     // testMirrorDiagonal();
     // testMirrorTemple();
-    testMirrorArms();
-    //testCopyGull();    
+    // testMirrorArms();
+    testCopyGull();    
     //testCreateCollage();
     
     //testChromakey();

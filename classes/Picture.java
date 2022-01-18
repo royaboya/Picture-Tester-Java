@@ -255,7 +255,26 @@ public class Picture extends SimplePicture {
     Pixel[][] pixels = this.getPixels2D();
     for (int i = 153; i < 194; i++) {
       for (int j = 0; j <= 170; j++) {
-        Pixel otherPixel = pixels[getHeight() - i][j];
+        // maybe get a midpoint value from under arms by subtracting distance from
+        // bottom divide by 2 and add from there
+        Pixel otherPixel = pixels[Math.abs(pixels[i][j].getY() - 190) + 190][j];
+        // 190 is mid
+        // Pixel otherPixel = pixels[getHeight() - i + 90][j];
+        otherPixel.setRed(pixels[i][j].getRed());
+        otherPixel.setGreen(pixels[i][j].getGreen());
+        otherPixel.setBlue(pixels[i][j].getBlue());
+
+      }
+    }
+
+    // midline - 190
+
+    for (int i = 153; i < 194; i++) {
+      for (int j = 239; j < 296; j++) {
+        // maybe get a midpoint value from under arms by subtracting distance from
+        // bottom divide by 2 and add from there
+        // getHeight()/2 + (getHeight() - i)][
+        Pixel otherPixel = pixels[Math.abs(pixels[i][j].getY() - 190) + 190][j];
         otherPixel.setRed(pixels[i][j].getRed());
         otherPixel.setGreen(pixels[i][j].getGreen());
         otherPixel.setBlue(pixels[i][j].getBlue());
@@ -268,6 +287,20 @@ public class Picture extends SimplePicture {
   /** Method to copy the gull in the picture to another location of the picture */
   public void copyGull() {
     // add your code here
+    Pixel[][] pixels = this.getPixels2D();
+    // 232, 238 (x, y) -> top left with end 232 347
+    // 323, 238 (x, y) - > bottom left with end 323 347
+    // over vertical line x = 347
+
+    for(int i = 232; i < 323; i++){
+      for(int j = 238; j < 347; j++){
+        Pixel otherPixel = pixels[i][Math.abs(pixels[i][j].getX() - 347) + 347];
+        otherPixel.setBlue(pixels[i][j].getBlue());
+        otherPixel.setRed(pixels[i][j].getRed());
+        otherPixel.setGreen(pixels[i][j].getGreen());
+
+      }
+    }
   }
 
   /** Method to create a collage of several pictures */
