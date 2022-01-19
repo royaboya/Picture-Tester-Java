@@ -144,6 +144,10 @@ public class Picture extends SimplePicture {
         int red = pixels[i][j].getRed();
         int green = pixels[i][j].getGreen();
         int blue = pixels[i][j].getBlue();
+        // 6 <= red <= 23
+        // 148 <= green <= 173
+        // 153 <= blue <= 201
+
 
         if (6 <= red && red <= 23 && 148 <= green && green <= 173 && 153 <= blue && blue <= 201) {
           pixels[i][j].setBlue(255);
@@ -292,8 +296,8 @@ public class Picture extends SimplePicture {
     // 323, 238 (x, y) - > bottom left with end 323 347
     // over vertical line x = 347
 
-    for(int i = 232; i < 323; i++){
-      for(int j = 238; j < 347; j++){
+    for (int i = 232; i < 323; i++) {
+      for (int j = 238; j < 347; j++) {
         Pixel otherPixel = pixels[i][Math.abs(pixels[i][j].getX() - 347) + 347];
         otherPixel.setBlue(pixels[i][j].getBlue());
         otherPixel.setRed(pixels[i][j].getRed());
@@ -305,7 +309,20 @@ public class Picture extends SimplePicture {
 
   /** Method to create a collage of several pictures */
   public void createCollage() {
-    // add your code here
+    // // add your code here
+    // Pixel[][] pixels = this.getPixels2D();
+    // Picture flowerOne = new Picture("flower1.jpg");
+    // Picture flowerTwo = new Picture("flower2.jpg");
+
+    // Pixel[][] pixelFlowerOne = flowerOne.getPixels2D();
+    // Pixel[][] pixelFlowerTwo = flowerTwo.getPixels2D();
+    // System.out.println(flowerOne.getWidth() + " by " + getHeight());
+    // for(int i = 0; i < flowerOne.getHeight(); i++){
+    // for(int j = 0; j < pixels[i].length; j++){
+
+    // }
+    // }
+
   }
 
   /**
@@ -315,11 +332,47 @@ public class Picture extends SimplePicture {
    */
   public void chromakey(Picture newBack) {
     // add your code here
+    Pixel[][] pixels = this.getPixels2D();
+    Pixel[][] pixelsNew = newBack.getPixels2D();
+
+    for (int i = 0; i < pixels.length; i++) {
+      for (int j = 0; j < pixels[i].length; j++) {
+        int red = pixels[i][j].getRed();
+        int green = pixels[i][j].getGreen();
+        int blue = pixels[i][j].getBlue();
+
+        // if (red <= 29 && 15 <= green && green <= 50 && 10 <= blue && blue <= 85) {
+        // pixels[i][j].setColor(pixelsNew[i][j].getColor());
+        // }
+        if (blue > red && blue > green) {
+          pixels[i][j].setColor(pixelsNew[i][j].getColor());
+        }
+      }
+
+    }
+
   }
 
   /** Method to decode a message hidden in the red value of the current picture */
   public void decode() {
     // add your code here
+    Pixel[][] pixels = this.getPixels2D();
+    for(int i = 0; i < pixels.length; i++){
+      for(int j = 0; j < pixels[i].length; j++){
+        if(pixels[i][j].getRed() % 2 == 1){
+          pixels[i][j].setRed(255);
+          pixels[i][j].setGreen(255);
+          pixels[i][j].setBlue(255);
+        }
+        else{
+          pixels[i][j].setRed(0);
+          pixels[i][j].setGreen(0);
+          pixels[i][j].setBlue(0);
+        }
+      }
+
+    }
+
   }
 
   /**
@@ -330,5 +383,21 @@ public class Picture extends SimplePicture {
    */
   public void encodeGreen(Picture messagePict) {
     // add your code here
+    Pixel[][] pixels = this.getPixels2D();
+    Pixel[][] pixelMessage = messagePict.getPixels2D();
+    for(int i = 0; i < pixelMessage.length; i++)
+    {
+      for(int j = 0; j < pixelMessage[i].length; j++){
+        int blue =pixelMessage[i][j].getBlue();
+        int red = pixelMessage[i][j].getRed();
+        int green = pixelMessage[i][j].getGreen(); 
+        if(blue == 0 && red == 0 && green == 0){
+          pixels[i][j].setGreen(pixels[i][j].getGreen() + 1);
+        }
+        else{
+          pixels[i][j].setGreen(pixels[i][j].getGreen() - 1);
+        }
+      }
+    }
   }
 }

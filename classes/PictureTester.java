@@ -14,7 +14,7 @@ public class PictureTester
   {
     // uncomment a call here to run a test
     // and comment out the ones you don't want
-    // to run
+    // // to run
     // testZeroBlue();
     // testGreenOnly();
     // testNegate();
@@ -26,12 +26,12 @@ public class PictureTester
     // testMirrorDiagonal();
     // testMirrorTemple();
     // testMirrorArms();
-    testCopyGull();    
-    //testCreateCollage();
+    // testCopyGull();    
+    testCreateCollage();
     
-    //testChromakey();
-    //testDecode();
-    //testEncodeGreen();
+    // testChromakey();
+    // testDecode();
+    // testEncodeGreen();
   }
   
   /** Method to test zeroBlue */
@@ -172,6 +172,6 @@ public class PictureTester
     text.explore();
     beach.encodeGreen(text);
     beach.write("encodeGreen.bmp");
-    beach.explore();
+    beach.explore();    
   }
 }
