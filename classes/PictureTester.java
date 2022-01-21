@@ -27,11 +27,11 @@ public class PictureTester
     // testMirrorTemple();
     // testMirrorArms();
     // testCopyGull();    
-    testCreateCollage();
+    // testCreateCollage();
     
     // testChromakey();
     // testDecode();
-    // testEncodeGreen();
+    testEncodeGreen();
   }
   
   /** Method to test zeroBlue */

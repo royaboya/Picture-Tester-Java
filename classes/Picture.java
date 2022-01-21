@@ -140,18 +140,16 @@ public class Picture extends SimplePicture {
     // add your code here
     Pixel[][] pixels = this.getPixels2D();
     for (int i = 0; i < 152; i++) { // chose 152 and 475 to remove extraneous white pixels
-      for (int j = 0; j < 475; j++) {
+      for (int j = 0; j < 474; j++) {
+        Pixel pixel = pixels[i][j];
         int red = pixels[i][j].getRed();
         int green = pixels[i][j].getGreen();
         int blue = pixels[i][j].getBlue();
-        // 6 <= red <= 23
-        // 148 <= green <= 173
-        // 153 <= blue <= 201
 
         if (6 <= red && red <= 23 && 148 <= green && green <= 173 && 153 <= blue && blue <= 201) {
-          pixels[i][j].setBlue(255);
-          pixels[i][j].setGreen(255);
-          pixels[i][j].setRed(255);
+          pixel.setBlue(255);
+          pixel.setGreen(255);
+          pixel.setRed(255);
         }
       }
     }
@@ -164,30 +162,18 @@ public class Picture extends SimplePicture {
   public void edgeDetection() {
     // add your code here
     Pixel[][] pixels = this.getPixels2D();
-    // for (int i = 0; i < pixels.length; i++) {
-    // for (int j = 0; j < pixels[i].length - 1; j++) {
-    // if (pixels[i][j].colorDistance(pixels[i][j + 1].getColor()) > 14) {
-    // pixels[i][j].setGreen(0);
-    // pixels[i][j].setBlue(0);
-    // pixels[i][j].setRed(0);
-    // } else {
-    // pixels[i][j].setRed(255);
-    // pixels[i][j].setGreen(255);
-    // pixels[i][j].setBlue(255);
-    // }
-    // }
-    // }
-
+    // vertical scan
     for (int i = 0; i < pixels.length - 1; i++) {
       for (int j = 0; j < pixels[i].length; j++) {
+        Pixel pixel = pixels[i][j];
         if (pixels[i][j].colorDistance(pixels[i + 1][j].getColor()) > 14.8) {
-          pixels[i][j].setGreen(0);
-          pixels[i][j].setBlue(0);
-          pixels[i][j].setRed(0);
+          pixel.setGreen(0);
+          pixel.setBlue(0);
+          pixel.setRed(0);
         } else {
-          pixels[i][j].setRed(255);
-          pixels[i][j].setGreen(255);
-          pixels[i][j].setBlue(255);
+          pixel.setRed(255);
+          pixel.setGreen(255);
+          pixel.setBlue(255);
         }
       }
     }
@@ -204,10 +190,7 @@ public class Picture extends SimplePicture {
     for (int i = 0; i < pixels.length; i++) {
       for (int j = 0; j < this.getWidth() / 2; j++) {
         Pixel otherSide = pixels[i][getWidth() - j - 1];
-
-        otherSide.setRed(pixels[i][j].getRed());
-        otherSide.setGreen(pixels[i][j].getGreen());
-        otherSide.setBlue(pixels[i][j].getBlue());
+        otherSide.setColor(pixels[i][j].getColor());
       }
     }
   }
@@ -215,16 +198,15 @@ public class Picture extends SimplePicture {
   /** Method to mirror around a diagonal line from bottom left to top right */
   public void mirrorDiagonal() {
     // add your code here
-    System.out.println(this.getWidth()); // x
-    System.out.println(this.getHeight()); // y
+    System.out.println(this.getWidth());
+    System.out.println(this.getHeight());
 
     Pixel[][] pixels = this.getPixels2D();
     for (int i = 0; i < pixels.length; i++) {
       for (int j = 0; j < getHeight(); j++) {
         Pixel current = pixels[i][j];
-        current.setRed(pixels[j][i].getRed());
-        current.setGreen(pixels[j][i].getGreen());
-        current.setBlue(pixels[j][i].getBlue());
+        current.setColor(pixels[j][i].getColor());
+
       }
     }
 
@@ -240,9 +222,7 @@ public class Picture extends SimplePicture {
     for (int i = 0; i < 98; i++) {
       for (int j = 0; j < getWidth() / 2; j++) {
         Pixel otherSide = pixels[i][getWidth() - j - 1];
-        otherSide.setRed(pixels[i][j].getRed());
-        otherSide.setGreen(pixels[i][j].getGreen());
-        otherSide.setBlue(pixels[i][j].getBlue());
+        otherSide.setColor(pixels[i][j].getColor());
 
       }
     }
@@ -258,19 +238,10 @@ public class Picture extends SimplePicture {
     Pixel[][] pixels = this.getPixels2D();
     for (int i = 153; i < 194; i++) {
       for (int j = 0; j <= 170; j++) {
-        // maybe get a midpoint value from under arms by subtracting distance from
-        // bottom divide by 2 and add from there
         Pixel otherPixel = pixels[Math.abs(pixels[i][j].getY() - 190) + 190][j];
-        // 190 is mid
-        // Pixel otherPixel = pixels[getHeight() - i + 90][j];
-        otherPixel.setRed(pixels[i][j].getRed());
-        otherPixel.setGreen(pixels[i][j].getGreen());
-        otherPixel.setBlue(pixels[i][j].getBlue());
-
+        otherPixel.setColor(pixels[i][j].getColor());
       }
     }
-
-    // midline - 190
 
     for (int i = 153; i < 194; i++) {
       for (int j = 239; j < 296; j++) {
@@ -278,9 +249,7 @@ public class Picture extends SimplePicture {
         // bottom divide by 2 and add from there
         // getHeight()/2 + (getHeight() - i)][
         Pixel otherPixel = pixels[Math.abs(pixels[i][j].getY() - 190) + 190][j];
-        otherPixel.setRed(pixels[i][j].getRed());
-        otherPixel.setGreen(pixels[i][j].getGreen());
-        otherPixel.setBlue(pixels[i][j].getBlue());
+        otherPixel.setColor(pixels[i][j].getColor());
 
       }
     }
@@ -291,16 +260,11 @@ public class Picture extends SimplePicture {
   public void copyGull() {
     // add your code here
     Pixel[][] pixels = this.getPixels2D();
-    // 232, 238 (x, y) -> top left with end 232 347
-    // 323, 238 (x, y) - > bottom left with end 323 347
-    // over vertical line x = 347
 
     for (int i = 232; i < 323; i++) {
       for (int j = 238; j < 347; j++) {
         Pixel otherPixel = pixels[i][Math.abs(pixels[i][j].getX() - 347) + 347];
-        otherPixel.setBlue(pixels[i][j].getBlue());
-        otherPixel.setRed(pixels[i][j].getRed());
-        otherPixel.setGreen(pixels[i][j].getGreen());
+        otherPixel.setColor(pixels[i][j].getColor());
 
       }
     }
@@ -325,34 +289,34 @@ public class Picture extends SimplePicture {
     setFlower(pixels, pixelFlowerOne, 0, 0);
     setFlower(pixels, pixelFlowerTwo, 101, 0);
     setFlower(pixels, pixelFlowerOne, 201, 0);
-    for(int i = 0; i < pixelFlowerTwo.length; i++){
-      for(int j = 0; j < pixelFlowerTwo[0].length; j++){
-        if(pixelFlowerTwo[i][j].getRed() > 230 && pixelFlowerTwo[i][j].getBlue() > 230 && pixelFlowerTwo[i][j].getGreen() > 230){
+    for (int i = 0; i < pixelFlowerTwo.length; i++) {
+      for (int j = 0; j < pixelFlowerTwo[0].length; j++) {
+        if (pixelFlowerTwo[i][j].getRed() > 230 && pixelFlowerTwo[i][j].getBlue() > 230
+            && pixelFlowerTwo[i][j].getGreen() > 230) {
           pixelFlowerTwo[i][j].setBlue(0);
           pixelFlowerTwo[i][j].setRed(255);
           pixelFlowerTwo[i][j].setGreen(255);
         }
-        
+
       }
     }
     setFlower(pixels, pixelFlowerTwo, 301, 0);
     setFlower(pixels, pixelFlowerOne, 401, 0);
 
-
-    for(int i = 0; i < pixels.length; i++){
-      for(int j = 1; j <= 100; j++){
-        Pixel other = pixels[i][getWidth() - j ];
+    for (int i = 0; i < pixels.length; i++) {
+      for (int j = 1; j <= 100; j++) {
+        Pixel other = pixels[i][getWidth() - j];
         other.setColor(pixels[i][j].getColor());
       }
     }
 
   }
 
-  public void setFlower(Pixel[][] img ,Pixel[][] flower, int row, int col){
-    
-    for(int i = 0; i < flower.length; i++){
-      for(int j = 0; j < flower[i].length; j++){
-        if(row >= img.length){
+  public void setFlower(Pixel[][] img, Pixel[][] flower, int row, int col) {
+
+    for (int i = 0; i < flower.length; i++) {
+      for (int j = 0; j < flower[i].length; j++) {
+        if (row >= img.length) {
           return;
         }
 
