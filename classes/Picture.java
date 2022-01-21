@@ -148,7 +148,6 @@ public class Picture extends SimplePicture {
         // 148 <= green <= 173
         // 153 <= blue <= 201
 
-
         if (6 <= red && red <= 23 && 148 <= green && green <= 173 && 153 <= blue && blue <= 201) {
           pixels[i][j].setBlue(255);
           pixels[i][j].setGreen(255);
@@ -310,19 +309,59 @@ public class Picture extends SimplePicture {
   /** Method to create a collage of several pictures */
   public void createCollage() {
     // // add your code here
-    // Pixel[][] pixels = this.getPixels2D();
-    // Picture flowerOne = new Picture("flower1.jpg");
-    // Picture flowerTwo = new Picture("flower2.jpg");
+    Pixel[][] pixels = this.getPixels2D();
+    Picture flowerOne = new Picture("flower1.jpg");
+    Picture flowerTwo = new Picture("flower2.jpg");
 
-    // Pixel[][] pixelFlowerOne = flowerOne.getPixels2D();
-    // Pixel[][] pixelFlowerTwo = flowerTwo.getPixels2D();
-    // System.out.println(flowerOne.getWidth() + " by " + getHeight());
-    // for(int i = 0; i < flowerOne.getHeight(); i++){
-    // for(int j = 0; j < pixels[i].length; j++){
+    Pixel[][] pixelFlowerOne = flowerOne.getPixels2D();
+    Pixel[][] pixelFlowerTwo = flowerTwo.getPixels2D();
 
-    // }
-    // }
+    System.out.println(flowerOne.getWidth());
+    System.out.println(flowerOne.getHeight());
 
+    System.out.println(flowerTwo.getWidth());
+    System.out.println(flowerTwo.getHeight());
+
+    setFlower(pixels, pixelFlowerOne, 0, 0);
+    setFlower(pixels, pixelFlowerTwo, 101, 0);
+    setFlower(pixels, pixelFlowerOne, 201, 0);
+    for(int i = 0; i < pixelFlowerTwo.length; i++){
+      for(int j = 0; j < pixelFlowerTwo[0].length; j++){
+        if(pixelFlowerTwo[i][j].getRed() > 230 && pixelFlowerTwo[i][j].getBlue() > 230 && pixelFlowerTwo[i][j].getGreen() > 230){
+          pixelFlowerTwo[i][j].setBlue(0);
+          pixelFlowerTwo[i][j].setRed(255);
+          pixelFlowerTwo[i][j].setGreen(255);
+        }
+        
+      }
+    }
+    setFlower(pixels, pixelFlowerTwo, 301, 0);
+    setFlower(pixels, pixelFlowerOne, 401, 0);
+
+
+    for(int i = 0; i < pixels.length; i++){
+      for(int j = 1; j <= 100; j++){
+        Pixel other = pixels[i][getWidth() - j ];
+        other.setColor(pixels[i][j].getColor());
+      }
+    }
+
+  }
+
+  public void setFlower(Pixel[][] img ,Pixel[][] flower, int row, int col){
+    
+    for(int i = 0; i < flower.length; i++){
+      for(int j = 0; j < flower[i].length; j++){
+        if(row >= img.length){
+          return;
+        }
+
+        img[row][col].setColor(flower[i][j].getColor()); // col becomes too big, need to reset
+        col++;
+      }
+      row++;
+      col -= 100;
+    }
   }
 
   /**
@@ -357,14 +396,13 @@ public class Picture extends SimplePicture {
   public void decode() {
     // add your code here
     Pixel[][] pixels = this.getPixels2D();
-    for(int i = 0; i < pixels.length; i++){
-      for(int j = 0; j < pixels[i].length; j++){
-        if(pixels[i][j].getRed() % 2 == 1){
+    for (int i = 0; i < pixels.length; i++) {
+      for (int j = 0; j < pixels[i].length; j++) {
+        if (pixels[i][j].getRed() % 2 == 1) {
           pixels[i][j].setRed(255);
           pixels[i][j].setGreen(255);
           pixels[i][j].setBlue(255);
-        }
-        else{
+        } else {
           pixels[i][j].setRed(0);
           pixels[i][j].setGreen(0);
           pixels[i][j].setBlue(0);
@@ -385,16 +423,14 @@ public class Picture extends SimplePicture {
     // add your code here
     Pixel[][] pixels = this.getPixels2D();
     Pixel[][] pixelMessage = messagePict.getPixels2D();
-    for(int i = 0; i < pixelMessage.length; i++)
-    {
-      for(int j = 0; j < pixelMessage[i].length; j++){
-        int blue =pixelMessage[i][j].getBlue();
+    for (int i = 0; i < pixelMessage.length; i++) {
+      for (int j = 0; j < pixelMessage[i].length; j++) {
+        int blue = pixelMessage[i][j].getBlue();
         int red = pixelMessage[i][j].getRed();
-        int green = pixelMessage[i][j].getGreen(); 
-        if(blue == 0 && red == 0 && green == 0){
+        int green = pixelMessage[i][j].getGreen();
+        if (blue == 0 && red == 0 && green == 0) {
           pixels[i][j].setGreen(pixels[i][j].getGreen() + 1);
-        }
-        else{
+        } else {
           pixels[i][j].setGreen(pixels[i][j].getGreen() - 1);
         }
       }
