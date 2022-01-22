@@ -31,7 +31,8 @@ public class PictureTester
     
     // testChromakey();
     // testDecode();
-    testEncodeGreen();
+    // testEncodeGreen();
+    // decodeGreen(); // i added another method to see if my encodegreen method actually worked
   }
   
   /** Method to test zeroBlue */
@@ -174,4 +175,13 @@ public class PictureTester
     beach.write("encodeGreen.bmp");
     beach.explore();    
   }
+
+  // i added a method to see if the encode method actually worked properly
+  public static void decodeGreen(){
+    Picture file = new Picture("encodeGreen.bmp");
+    file.explore();
+    file.decodeGreen();
+    file.explore();
+  }
+
 }

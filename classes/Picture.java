@@ -372,9 +372,7 @@ public class Picture extends SimplePicture {
           pixels[i][j].setBlue(0);
         }
       }
-
     }
-
   }
 
   /**
@@ -393,11 +391,34 @@ public class Picture extends SimplePicture {
         int red = pixelMessage[i][j].getRed();
         int green = pixelMessage[i][j].getGreen();
         if (blue == 0 && red == 0 && green == 0) {
-          pixels[i][j].setGreen(pixels[i][j].getGreen() + 1);
+          if (pixels[i][j].getGreen() % 2 == 0) {
+            pixels[i][j].setGreen(pixels[i][j].getGreen() + 1);
+          }
         } else {
-          pixels[i][j].setGreen(pixels[i][j].getGreen() - 1);
+          if (pixels[i][j].getGreen() % 2 != 0) {
+            pixels[i][j].setGreen(pixels[i][j].getGreen() + 1);
+          }
         }
       }
     }
   }
+
+  public void decodeGreen() {
+    // add your code here
+    Pixel[][] pixels = this.getPixels2D();
+    for (int i = 0; i < pixels.length; i++) {
+      for (int j = 0; j < pixels[i].length; j++) {
+        if (pixels[i][j].getGreen() % 2 == 1) {
+          pixels[i][j].setRed(0);
+          pixels[i][j].setGreen(0);
+          pixels[i][j].setBlue(0);
+        } else {
+          pixels[i][j].setRed(255);
+          pixels[i][j].setGreen(255);
+          pixels[i][j].setBlue(255);
+        }
+      }
+    }
+  }
+
 }
